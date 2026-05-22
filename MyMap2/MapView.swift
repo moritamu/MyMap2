@@ -10,6 +10,7 @@ import MapKit
 
 struct MapView: View {
     let searchKey: String
+    @State var targetCoordenate = CLLocationCoordinate2D()
     var body: some View {
         Map(){
 
@@ -17,6 +18,17 @@ struct MapView: View {
         .onChange(of: searchKey, initial: true ) {
             oldValue, newValue in
             print("検索キーワード：\(newValue)")
+            let request = MKLocalSearch.Request()
+            request.naturalLanguageQuery = newValue
+            let search = MKLocalSearch(request: request)
+
+            search.start { response, error in
+                if let mapItem = response?.mapItems,
+                   let mapItem = mapItem.first {
+                    targetCoordenate = mapItem.placemark.coordinate
+                    print("軽度緯度：\(targetCoordenate)")
+                }
+            }
         }
     }
 }
