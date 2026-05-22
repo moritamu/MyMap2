@@ -28,10 +28,10 @@ struct MapView: View {
                     targetCoordenate = mapItem.placemark.coordinate
                     print("軽度緯度：\(targetCoordenate)")
                 }
-            }
-        }
-    }
-}
+            }//search
+        }//onChange
+    }//View
+}//MapView
 
 #Preview {
     MapView(searchKey: "熊谷")
