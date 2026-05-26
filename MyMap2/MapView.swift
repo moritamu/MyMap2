@@ -32,8 +32,8 @@ struct MapView: View {
                     print("経度緯度：\(targetCoordenate)")
                     cameraPosistion = .region(MKCoordinateRegion(
                         center: targetCoordenate,
-                        latitudinalMeters: 500.0,
-                        longitudinalMeters: 500.0
+                        latitudinalMeters: 400.0,
+                        longitudinalMeters: 400.0
                     ))//CameraPosition
                 }
             }//search
