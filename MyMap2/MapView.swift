@@ -8,16 +8,29 @@
 import SwiftUI
 import MapKit
 
+enum MapType {
+    case standard   //標準
+    case satellite  //航空写真
+    case hybrid     //
+}
 struct MapView: View {
     let searchKey: String
+    let mapType: MapType
     @State var targetCoordenate = CLLocationCoordinate2D()
     @State var cameraPosistion: MapCameraPosition = .automatic
-
+    var mapStyle: MapStyle {
+        switch mapType {
+        case .standard: return MapStyle.standard
+        case .satellite: return MapStyle.imagery
+        case .hybrid: return MapStyle.hybrid
+        }
+    }
     var body: some View {
         Map(position: $cameraPosistion) {
             // マーカーを表示
             Marker(searchKey, coordinate: targetCoordenate)
         }
+        .mapStyle(mapStyle)
         .onChange(of: searchKey, initial: true ) {
             oldValue, newValue in
             print("検索キーワード：\(newValue)")
@@ -42,5 +55,5 @@ struct MapView: View {
 }//MapView
 
 #Preview {
-    MapView(searchKey: "桶川中学校")
+    MapView(searchKey: "桶川中学校", mapType: .standard)
 }
